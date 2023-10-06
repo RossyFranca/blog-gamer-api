@@ -23,7 +23,7 @@ public class User {
     private String email;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "data_criacao")
+    @Column(name = "dt_criacao")
     private Date dataCriacao;
 
     private String password;

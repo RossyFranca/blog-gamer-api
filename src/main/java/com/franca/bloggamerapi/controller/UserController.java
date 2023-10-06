@@ -18,8 +18,15 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable Long id){
-        var user = userService.findById(id);
-        return ResponseEntity.ok(user);
+        var response = userService.findById(id);
+
+        UserDTO findedUser = new UserDTO();
+        findedUser.setNickname(response.getNickname());
+        findedUser.setId(response.getId());
+        findedUser.setEmail(response.getEmail());
+        findedUser.setDataCriacao(response.getDataCriacao());
+        findedUser.setTipo(response.getTipo());
+        return ResponseEntity.ok(findedUser);
     }
     @PostMapping
     public ResponseEntity<UserDTO> createUser(@RequestBody User user){
