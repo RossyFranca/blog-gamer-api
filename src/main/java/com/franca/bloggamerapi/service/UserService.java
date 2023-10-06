@@ -4,6 +4,6 @@ import com.franca.bloggamerapi.domain.dtos.UserDTO;
 import com.franca.bloggamerapi.domain.model.User;
 
 public interface UserService {
-    User findById(Long id);
-    UserDTO create(User user);
+    UserDTO findById(Long id);
+    User create(User user);
 }

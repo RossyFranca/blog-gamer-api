@@ -1,9 +1,9 @@
 package com.franca.bloggamerapi.domain.model;
 
 import com.franca.bloggamerapi.domain.enums.UserType;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.util.Date;
 
 
