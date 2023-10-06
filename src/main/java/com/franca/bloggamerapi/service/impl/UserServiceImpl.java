@@ -1,6 +1,7 @@
 package com.franca.bloggamerapi.service.impl;
 
-import com.franca.bloggamerapi.domain.User;
+import com.franca.bloggamerapi.domain.dtos.UserDTO;
+import com.franca.bloggamerapi.domain.model.User;
 import com.franca.bloggamerapi.repository.UserRepository;
 import com.franca.bloggamerapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +17,26 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
     @Override
     public User findById(Long id) {
+
         return null;
     }
 
     @Override
-    public User create(User user) {
+    public UserDTO create(User user) {
         if(userRepository.existsByNickname(user.getNickname()))
             throw  new IllegalArgumentException("This nickname already exists.");
 
         var senhaCodificada = passwordEncoder.encode(user.getPassword());
         user.setPassword(senhaCodificada);
-        return userRepository.save(user);
+        var response = userRepository.save(user);
+        UserDTO createdUser = new UserDTO(
+                response.getNickname(),
+                response.getDataCriacao(),
+                response.getTipo(),
+                response.getEmail()
+        );
+
+
+        return createdUser;
     }
 }
