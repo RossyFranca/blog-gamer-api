@@ -37,7 +37,7 @@ These additional references should also help you:
 
 ## Diagrama de classes:
 
-```
+```mermaid
 classDiagram
     class User {
         + id: Long
