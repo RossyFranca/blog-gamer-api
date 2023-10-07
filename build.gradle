@@ -42,6 +42,12 @@ dependencyManagement {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
 }
+tasks.jar{
+	manifest{
+		attributes["Main-Class"] = "com.franca.bloggamerapi.Application"
+	}
+}
+
 
 tasks.named('test') {
 	useJUnitPlatform()
