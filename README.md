@@ -35,7 +35,7 @@ These additional references should also help you:
 
 # blog-gamer-api
 
-## Diagrama de classes:
+## Class Diagram:
 
 ```mermaid
 classDiagram
