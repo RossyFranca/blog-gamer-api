@@ -36,15 +36,10 @@ public class Topic {
     @Column(name = "dt_created")
     private Date dateCreated;
 
+    @JoinColumn()
+    private Long idUser;
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private User user;
 
-    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
-    @JsonIgnoreProperties("topic")
-    private List<Comment> comments;
 
 
     @PrePersist

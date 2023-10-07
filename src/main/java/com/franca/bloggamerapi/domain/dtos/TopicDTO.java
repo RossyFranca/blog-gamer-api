@@ -1,8 +1,11 @@
 package com.franca.bloggamerapi.domain.dtos;
 
+import com.franca.bloggamerapi.domain.model.Comment;
+import com.franca.bloggamerapi.domain.model.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 @Data
@@ -15,6 +18,12 @@ public class TopicDTO {
     private int likes;
     private Date dateCreated;
 
-    private UserDTO user;
+    private User user;
 
+    private ArrayList<Comment> comments;
+
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

@@ -30,18 +30,9 @@ public class Comment {
     @Column(name = "dt_created")
     private Date dateCreated;
 
-    @ManyToOne
-    @JoinColumn(name = "id_user", referencedColumnName = "id_user",columnDefinition = "BIGINT")
-    @Fetch(FetchMode.JOIN)
-    @JsonIgnoreProperties("comments")
-    private User user;
+    private Long idUser;
 
-    //TODO: Ao criar um novo comentário ele nao está retornando a resposta encadeada do banco.
-    @ManyToOne
-    @Fetch(FetchMode.JOIN)
-    @JoinColumn(name = "id_topic", referencedColumnName = "id_topic")
-    @JsonIgnoreProperties("comments")
-    private Topic topic;
+   private Long idTopic;
 
     @PrePersist
     protected void onCreate() {
