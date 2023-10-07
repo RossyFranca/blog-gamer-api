@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TopicService {
     Topic findById(Long id);
-    Topic create(Topic user);
-
+    Topic create(Topic topic);
+    Topic put(Topic topic);
     List<Topic> findAll();
 }

@@ -1,6 +1,8 @@
 package com.franca.bloggamerapi.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.franca.bloggamerapi.domain.enums.UserType;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,8 +25,9 @@ public class User {
     private String email;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "dt_criacao")
-    private Date dataCriacao;
+    @Column(name = "dt_created")
+    @JsonIgnore
+    private Date dateCreated;
 
     private String password;
 
@@ -36,7 +39,7 @@ public class User {
     protected void onCreate() {
         long currentTime = System.currentTimeMillis();
         java.sql.Date sqlDate = new java.sql.Date(currentTime);
-        dataCriacao = sqlDate;
+        dateCreated = sqlDate;
     }
 
 }

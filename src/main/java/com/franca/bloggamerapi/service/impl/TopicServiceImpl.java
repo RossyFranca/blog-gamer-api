@@ -24,9 +24,12 @@ public class TopicServiceImpl implements TopicService {
     public Topic create(Topic newTopic) {
         if(topicRepository.existsByTitle(newTopic.getTitle()))
             throw  new IllegalArgumentException("This Topic already exists.");
-
-        newTopic.setComentarios(new ArrayList<>());
         return topicRepository.save(newTopic);
+    }
+
+    @Override
+    public Topic put(Topic topic) {
+        return null;
     }
 
     @Override

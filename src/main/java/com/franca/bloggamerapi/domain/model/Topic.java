@@ -1,11 +1,18 @@
 package com.franca.bloggamerapi.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 
 @Entity(name = "tb_topics")
 @Data
@@ -14,18 +21,37 @@ public class Topic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_topic")
+
+    private Long idTopic;
+
     private String title;
     private String body;
-    private int curtidas;
-    @Column(name = "dt_criacao")
-    private Date dataCriacao;
 
-    @JoinColumn(name = "id_user", referencedColumnName = "id")
-    @Column(name = "id_user")
-    private Long idUser;
+    @JsonIgnore
+    private int likes;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Comment> comentarios;
+    @JsonIgnore
+    @Temporal(TemporalType.DATE)
+    @Column(name = "dt_created")
+    private Date dateCreated;
+
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private User user;
+
+    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
+    @JsonIgnoreProperties("topic")
+    private List<Comment> comments;
+
+
+    @PrePersist
+    protected void onCreate() {
+        long currentTime = System.currentTimeMillis();
+        java.sql.Date sqlDate = new java.sql.Date(currentTime);
+        dateCreated = sqlDate;
+    }
 
 }

@@ -24,7 +24,7 @@ public class UserController {
         findedUser.setNickname(response.getNickname());
         findedUser.setId(response.getId());
         findedUser.setEmail(response.getEmail());
-        findedUser.setDataCriacao(response.getDataCriacao());
+        findedUser.setDataCriacao(response.getDateCreated());
         findedUser.setTipo(response.getTipo());
         return ResponseEntity.ok(findedUser);
     }
@@ -36,7 +36,7 @@ public class UserController {
         userCreated.setNickname(response.getNickname());
         userCreated.setId(response.getId());
         userCreated.setEmail(response.getEmail());
-        userCreated.setDataCriacao(response.getDataCriacao());
+        userCreated.setDataCriacao(response.getDateCreated());
         userCreated.setTipo(response.getTipo());
 
 

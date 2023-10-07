@@ -2,6 +2,7 @@ package com.franca.bloggamerapi.controller;
 
 import com.franca.bloggamerapi.domain.model.Topic;
 import com.franca.bloggamerapi.service.TopicService;
+import com.franca.bloggamerapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,8 @@ public class TopicController {
 
     @Autowired
     private TopicService topicService;
+    @Autowired
+    private UserService userService;
 
 
     @GetMapping("/{id}")
@@ -35,10 +38,11 @@ public class TopicController {
 
     @PostMapping
     public ResponseEntity<Topic> createNewTopic(@RequestBody Topic newTopic){
+        newTopic.setComments(new ArrayList<>());
         var createdTopic = topicService.create(newTopic);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(createdTopic.getId()).toUri();
+                .path("/{id}").buildAndExpand(createdTopic.getIdTopic()).toUri();
         return ResponseEntity.created(location).body(createdTopic);
     }
 
