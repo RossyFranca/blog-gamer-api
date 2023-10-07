@@ -37,6 +37,7 @@ These additional references should also help you:
 
 ## Diagrama de classes:
 
+```
 classDiagram
     class User {
         + id: Long
@@ -68,4 +69,5 @@ classDiagram
     User "1" --o "0..*" Topic : writes
     User "1" --o "0..*" Comment : comments
     Topic "1" --o "0..*" Comment : has
+```
 
