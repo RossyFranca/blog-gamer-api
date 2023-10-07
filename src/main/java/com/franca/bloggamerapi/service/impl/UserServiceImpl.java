@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     public User create(User user) {
         if(userRepository.existsByNickname(user.getNickname()))
             throw  new IllegalArgumentException("This nickname already exists.");
-//TODO
+//TODO: COdificar senha
 //        var senhaCodificada = passwordEncoder.encode(user.getPassword());
 //        user.setPassword(senhaCodificada);
 
