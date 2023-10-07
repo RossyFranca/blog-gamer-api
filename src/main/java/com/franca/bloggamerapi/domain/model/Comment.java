@@ -30,9 +30,14 @@ public class Comment {
     @Column(name = "dt_created")
     private Date dateCreated;
 
-    private Long idUser;
+    @ManyToOne
+    @JoinColumn(name = "id_user", referencedColumnName = "id_user", nullable = false)
+    private User user;
 
-   private Long idTopic;
+    @ManyToOne
+    @JoinColumn(name = "id_topic", referencedColumnName = "id_topic", nullable = false)
+    private Topic topic;
+
 
     @PrePersist
     protected void onCreate() {

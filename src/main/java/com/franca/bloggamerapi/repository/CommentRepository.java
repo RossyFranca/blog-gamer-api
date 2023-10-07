@@ -7,5 +7,5 @@ import java.util.ArrayList;
 
 public interface CommentRepository extends JpaRepository<Comment,Long> {
 
-    ArrayList<Comment> findByIdTopic(Long idTopic);
+    ArrayList<Comment> findByTopicIdTopic(Long topicId);
 }

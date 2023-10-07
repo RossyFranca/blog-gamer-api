@@ -25,6 +25,6 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public ArrayList<Comment> findCommentsByTopicId(Long idTopic) {
-        return commentRepository.findByIdTopic(idTopic);
+        return commentRepository.findByTopicIdTopic(idTopic);
     }
 }

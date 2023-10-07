@@ -22,32 +22,18 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable Long id){
-        var response = userService.findById(id);
-
-        UserDTO findedUser = new UserDTO();
-        findedUser.setNickname(response.getNickname());
-        findedUser.setIdUser(response.getId());
-        findedUser.setEmail(response.getEmail());
-        findedUser.setDateCreated(response.getDateCreated());
-        findedUser.setTipo(response.getTipo());
-
+        var user = userService.findById(id);
         var topics = topicService.getTopicsByUserId(id);
-        findedUser.setTopics(topics);
+
+        UserDTO findedUser = UserDTO.createUserDTO(user, topics);
 
         return ResponseEntity.ok(findedUser);
     }
     @PostMapping
     public ResponseEntity<UserDTO> createUser(@RequestBody User user){
-        var response =  userService.create(user);
-        UserDTO userCreated = new UserDTO();
+        var createdUser =  userService.create(user);
 
-        userCreated.setNickname(response.getNickname());
-        userCreated.setIdUser(response.getId());
-        userCreated.setEmail(response.getEmail());
-        userCreated.setDateCreated(response.getDateCreated());
-        userCreated.setTipo(response.getTipo());
-        userCreated.setTopics(new ArrayList<>());
-
+        UserDTO userCreated = UserDTO.createUserDTO(createdUser, new ArrayList<>());
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(userCreated.getIdUser()).toUri();

@@ -7,5 +7,5 @@ import java.util.ArrayList;
 
 public interface TopicRepository extends JpaRepository<Topic,Long> {
     boolean existsByTitle(String title);
-    ArrayList<Topic> findByidUser(Long idUser);
+    ArrayList<Topic> findByAuthorId(Long idUser);
 }

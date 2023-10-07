@@ -39,6 +39,6 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public ArrayList<Topic> getTopicsByUserId(Long idUser) {
-        return topicRepository.findByidUser(idUser);
+        return topicRepository.findByAuthorId(idUser);
     }
 }

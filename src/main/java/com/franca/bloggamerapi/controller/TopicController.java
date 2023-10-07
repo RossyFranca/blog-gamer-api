@@ -29,19 +29,15 @@ public class TopicController {
 
     @GetMapping("/{id}")
     public ResponseEntity<TopicDTO> findById(@PathVariable Long id){
-        Topic topic = topicService.findById(id);
-        User user = userService.findById(topic.getIdUser());
+        Topic findedTopic = topicService.findById(id);
+        User user = userService.findById(findedTopic.getAuthor().getId());
         ArrayList<Comment> comments = commentService.findCommentsByTopicId(id);
-        TopicDTO findedTopic = new TopicDTO();
-        findedTopic.setUser(user);
-        findedTopic.setIdTopic(topic.getIdTopic());
-        findedTopic.setTitle(topic.getTitle());
-        findedTopic.setBody(topic.getBody());
-        findedTopic.setLikes(topic.getLikes());
-        findedTopic.setDateCreated(topic.getDateCreated());
-        findedTopic.setComments(comments);
 
-        return ResponseEntity.ok(findedTopic);
+        findedTopic.setAuthor(user);
+        TopicDTO newTopic = TopicDTO.createTopicDTO(findedTopic, comments);
+
+
+        return ResponseEntity.ok(newTopic);
 
     }
 
@@ -56,21 +52,10 @@ public class TopicController {
     public ResponseEntity<TopicDTO> createNewTopic(@RequestBody Topic newTopic){
 
         var createdTopic = topicService.create(newTopic);
+        var user = userService.findById(newTopic.getAuthor().getId());
+        createdTopic.setAuthor(user);
+        TopicDTO  topic = TopicDTO.createTopicDTO(createdTopic, new ArrayList<>());
 
-
-        TopicDTO  topic = new TopicDTO();
-
-        topic.setIdTopic(createdTopic.getIdTopic());
-        topic.setTitle(createdTopic.getTitle());
-        topic.setBody(createdTopic.getBody());
-        topic.setComments(new ArrayList<>());
-        topic.setDateCreated(createdTopic.getDateCreated());
-        topic.setLikes(0);
-
-        User user = userService.findById(newTopic.getIdUser());
-
-        topic.setUser(user);
-        
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(topic.getIdTopic()).toUri();
