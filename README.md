@@ -35,3 +35,37 @@ These additional references should also help you:
 
 # blog-gamer-api
 
+## Diagrama de classes:
+
+classDiagram
+    class User {
+        + id: Long
+        + nickname: String
+        + email: String
+        + dateCreated: Date
+        + password: String
+        + type: UserType
+    }
+
+    class Topic {
+        + idTopic: Long
+        + title: String
+        + body: String
+        + likes: int
+        + dateCreated: Date
+        + author: User
+    }
+
+    class Comment {
+        + idComment: Long
+        + body: String
+        + likes: int
+        + dateCreated: Date
+        + user: User
+        + topic: Topic
+    }
+
+    User "1" --o "0..*" Topic : writes
+    User "1" --o "0..*" Comment : comments
+    Topic "1" --o "0..*" Comment : has
+
