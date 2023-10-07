@@ -71,3 +71,5 @@ classDiagram
     Topic "1" --o "0..*" Comment : has
 ```
 
+Public link: [blog-gamer-api](https://blog-gamer-api-prd.up.railway.app/)
+Swagger link: [swagger-ui.html](https://blog-gamer-api-prd.up.railway.app/swagger-ui/index.html)
