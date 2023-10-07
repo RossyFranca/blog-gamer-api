@@ -30,9 +30,9 @@ public class User {
     private Date dateCreated;
 
     private String password;
-
+    @JsonIgnore
     @Enumerated(EnumType.STRING)
-    private UserType tipo;
+    private UserType type;
 
 
     @PrePersist
@@ -40,6 +40,7 @@ public class User {
         long currentTime = System.currentTimeMillis();
         java.sql.Date sqlDate = new java.sql.Date(currentTime);
         dateCreated = sqlDate;
+        this.type = UserType.NORMAL;
     }
 
 }

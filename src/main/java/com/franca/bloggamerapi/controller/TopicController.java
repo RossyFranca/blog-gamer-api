@@ -1,6 +1,10 @@
 package com.franca.bloggamerapi.controller;
 
+import com.franca.bloggamerapi.domain.dtos.TopicDTO;
+import com.franca.bloggamerapi.domain.model.Comment;
 import com.franca.bloggamerapi.domain.model.Topic;
+import com.franca.bloggamerapi.domain.model.User;
+import com.franca.bloggamerapi.service.CommentService;
 import com.franca.bloggamerapi.service.TopicService;
 import com.franca.bloggamerapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +23,21 @@ public class TopicController {
     private TopicService topicService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CommentService commentService;
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Topic> findById(@PathVariable Long id){
-        var topic = topicService.findById(id);
+    public ResponseEntity<TopicDTO> findById(@PathVariable Long id){
+        Topic findedTopic = topicService.findById(id);
+        User user = userService.findById(findedTopic.getAuthor().getId());
+        ArrayList<Comment> comments = commentService.findCommentsByTopicId(id);
 
-        return ResponseEntity.ok(topic);
+        findedTopic.setAuthor(user);
+        TopicDTO newTopic = TopicDTO.createTopicDTO(findedTopic, comments);
+
+
+        return ResponseEntity.ok(newTopic);
 
     }
 
@@ -37,13 +49,17 @@ public class TopicController {
     }
 
     @PostMapping
-    public ResponseEntity<Topic> createNewTopic(@RequestBody Topic newTopic){
-        newTopic.setComments(new ArrayList<>());
+    public ResponseEntity<TopicDTO> createNewTopic(@RequestBody Topic newTopic){
+
         var createdTopic = topicService.create(newTopic);
+        var user = userService.findById(newTopic.getAuthor().getId());
+        createdTopic.setAuthor(user);
+        TopicDTO  topic = TopicDTO.createTopicDTO(createdTopic, new ArrayList<>());
+
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(createdTopic.getIdTopic()).toUri();
-        return ResponseEntity.created(location).body(createdTopic);
+                .path("/{id}").buildAndExpand(topic.getIdTopic()).toUri();
+        return ResponseEntity.created(location).body(topic);
     }
 
 }

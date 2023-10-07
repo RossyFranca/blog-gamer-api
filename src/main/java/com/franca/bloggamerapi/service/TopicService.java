@@ -2,6 +2,7 @@ package com.franca.bloggamerapi.service;
 
 import com.franca.bloggamerapi.domain.model.Topic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -10,4 +11,6 @@ public interface TopicService {
     Topic create(Topic topic);
     Topic put(Topic topic);
     List<Topic> findAll();
+
+    ArrayList<Topic> getTopicsByUserId(Long userId);
 }

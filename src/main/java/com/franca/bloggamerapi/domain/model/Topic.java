@@ -22,7 +22,6 @@ public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_topic")
-
     private Long idTopic;
 
     private String title;
@@ -36,15 +35,12 @@ public class Topic {
     @Column(name = "dt_created")
     private Date dateCreated;
 
+    @ManyToOne // Mapeia o relacionamento com User
+    @JoinColumn(name = "id_user", referencedColumnName = "id_user", nullable = false)
+    private User author;
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private User user;
 
-    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
-    @JsonIgnoreProperties("topic")
-    private List<Comment> comments;
+
 
 
     @PrePersist
